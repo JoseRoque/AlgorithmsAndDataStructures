@@ -15,26 +15,26 @@ public class BinaryTree<K extends Comparable, V> {
   }
 
   public void addBinaryTreeNode( BinaryTreeNode<K,V> node, BinaryTreeNode<K,V> data ) {
-      if(node != null && data.key.compareTo(node.key) < 0) {
-        if( node.left == null ){
-          node.left = data;
-        } else {
-          addBinaryTreeNode(node.left, data);
-        }
-      } else if(node != null && data.key.compareTo(node.key) > 0){
-        if( node.right == null ){
-          node.right = data;
-        } else {
-          addBinaryTreeNode(node.right, data);
-        }
+    if(node != null && data.key.compareTo(node.key) < 0) {
+      if( node.left == null ){
+        node.left = data;
+      } else {
+        addBinaryTreeNode(node.left, data);
       }
-
+    } else if(node != null && data.key.compareTo(node.key) > 0){
+      if( node.right == null ){
+        node.right = data;
+      } else {
+        addBinaryTreeNode(node.right, data);
+      }
+    }
   }
+
   public void printBinaryTree() {
     printBinaryTree(root);
   }
 
-  private void printBinaryTree(BinaryTreeNode<K,V> p) {
+  private void printBinaryTree( BinaryTreeNode<K,V> p ) {
     if( p == null) {
       return;
     }
@@ -43,4 +43,4 @@ public class BinaryTree<K extends Comparable, V> {
     System.out.println(p.value);
     printBinaryTree(p.right);
   }
-} // end Tree
+}
