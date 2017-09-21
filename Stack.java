@@ -1,10 +1,10 @@
 public interface Stack {
 
-    void push(Object item);
+    void push(Object item) throws StackException;
 
-    Object pop();
+    Object pop() throws StackException ;
 
-    Object peek();
+    Object peek() throws StackException;
 
     int size();
 
