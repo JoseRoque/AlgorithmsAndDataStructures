@@ -30,16 +30,6 @@ public class ArrayBackedStack<T extends Comparable<T>> implements Stack {
       return (T) stack[--size];
     }
 
-    public int search(Object o) {
-      int distance = 1;
-      while( distance <= size ) {
-        if( stack[distance-1].equals(o)) {
-          break;
-        }
-      }
-      return distance;
-    }
-
     @Override
     public int size() {
       return size;
