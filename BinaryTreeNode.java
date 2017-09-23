@@ -23,4 +23,14 @@ public class BinaryTreeNode<K extends Comparable, V> implements Comparable<Binar
     }
     return this.key.compareTo( o.key );
   }
+
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Parent: " + ( parent == null ? "NULL" : parent.value) + "\t" );
+    sb.append("Left: " + ( left == null ? "NULL" : left.value) + "\t" );
+    sb.append("Right: " + ( right == null ? "NULL" : right.value) );
+
+    return sb.toString();
+  }
 }
