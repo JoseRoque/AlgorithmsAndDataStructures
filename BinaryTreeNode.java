@@ -1,3 +1,6 @@
+import java.util.*;
+import java.lang.*;
+
 public class BinaryTreeNode<K extends Comparable, V> implements Comparable<BinaryTreeNode<K, V>> {
   K key;
   V value;
@@ -27,7 +30,7 @@ public class BinaryTreeNode<K extends Comparable, V> implements Comparable<Binar
   public String toString() {
     StringBuilder sb = new StringBuilder();
 
-    sb.append("Parent: " + ( parent == null ? "NULL" : parent.value) + "\t" );
+    sb.append("Value: " + value + "\t" );
     sb.append("Left: " + ( left == null ? "NULL" : left.value) + "\t" );
     sb.append("Right: " + ( right == null ? "NULL" : right.value) );
 
