@@ -37,20 +37,26 @@ public class BinaryTree<K extends Comparable, V> {
     }
   }
 
-  public BinaryTreeNode<K,V> min() {
-    BinaryTreeNode<K,V> n  = root;
+  public BinaryTreeNode<K,V> min(BinaryTreeNode<K,V> n) {
     while( n != null ){
       n = root.left;
     }
     return root;
   }
 
-  public BinaryTreeNode<K,V> max() {
-    BinaryTreeNode<K,V> n  = root;
+  public BinaryTreeNode<K,V> min() {
+    return min(root);
+  }
+
+  public BinaryTreeNode<K,V> max(BinaryTreeNode<K,V> n) {
     while( n != null ){
       n = root.right;
     }
     return root;
+  }
+
+  public BinaryTreeNode<K,V> max() {
+    return max(root);
   }
 
   public BinaryTreeNode<K,V> search( K key ){
@@ -76,11 +82,39 @@ public class BinaryTree<K extends Comparable, V> {
     BinaryTreeNode<K,V> node = search(key);
     if( node == null ){ return null; }
     if( node.right != null ){
+      return min(node.right);
+    }
+
+    BinaryTreeNode<K,V> parent = node.parent;
+    while( parent != null && parent.right == node ) {
+      node = parent;
+      parent = parent.parent;
+    }
+    return parent;
+  }
+
+  public BinaryTreeNode<K,V> successor( BinaryTreeNode<K,V> node ) {
+    if( node == null ){ return null; }
+    if( node.right != null ){
       return node.right;
     }
 
     BinaryTreeNode<K,V> parent = node.parent;
     while( parent != null && parent.right == node ) {
+      node = parent;
+      parent = parent.parent;
+    }
+    return parent;
+  }
+
+  public BinaryTreeNode<K,V> predecessor( BinaryTreeNode<K,V> node ) {
+    if( node == null ){ return null; }
+    if( node.left != null ){
+      return max(node.left);
+    }
+
+    BinaryTreeNode<K,V> parent = node.parent;
+    while( parent != null && parent.left == node ) {
       node = parent;
       parent = parent.parent;
     }
@@ -101,7 +135,7 @@ public class BinaryTree<K extends Comparable, V> {
     }
     return parent;
   }
-  
+
   private boolean isParentNull(BinaryTreeNode<K,V> node) {
     return node.parent == null ? false : true;
   }
@@ -111,6 +145,59 @@ public class BinaryTree<K extends Comparable, V> {
   }
   private boolean hasRightChild(BinaryTreeNode<K,V> node) {
     return node.right == null ? false : true;
+  }
+
+  public boolean delete(K key) {
+
+    BinaryTreeNode<K,V> nodeToReplace =search(key);
+    if( nodeToReplace == null ){
+      return false;
+    }
+    delete(nodeToReplace);
+    return true;
+  }
+
+  private void delete(BinaryTreeNode<K,V> nodeToReplace) {
+    if( !hasRightChild(nodeToReplace) && !hasLeftChild(nodeToReplace) ) {
+      if(!isParentNull(nodeToReplace)
+      && (nodeToReplace.parent.left.key.compareTo(nodeToReplace) == 0) ) {
+        nodeToReplace.parent.left = null;
+      } else if(!isParentNull(nodeToReplace)
+      && (nodeToReplace.parent.right.key.compareTo(nodeToReplace) == 0) ) {
+        nodeToReplace.parent.right = null;
+      }
+      System.out.println("Deleted nodeToReplace w/ value: " + nodeToReplace.value );
+      return;
+    }
+    // case 1: if only has left child
+    if( !hasRightChild(nodeToReplace) && hasLeftChild(nodeToReplace) ) {
+      BinaryTreeNode<K,V> predecessor = predecessor(nodeToReplace);
+      copyContents(nodeToReplace, predecessor);
+      delete(predecessor);
+    }
+    // case 2: if only had right child
+    else if( hasRightChild(nodeToReplace) && !hasLeftChild(nodeToReplace) ) {
+      BinaryTreeNode<K,V> successor = successor(nodeToReplace);
+      copyContents(nodeToReplace, successor);
+      delete(successor);
+    }
+    // case 3: if has both left and right child
+    if( hasRightChild(nodeToReplace) && hasLeftChild(nodeToReplace) ) {
+      BinaryTreeNode<K,V> successor = successor(nodeToReplace);
+      copyContents(nodeToReplace, successor);
+      delete(successor);
+    }
+  }
+
+  public void copyContents(BinaryTreeNode<K,V> toReplace, BinaryTreeNode<K,V> replacement) {
+    K tempKey = toReplace.key;
+    V tempVal = toReplace.value;
+
+    toReplace.key = replacement.key;
+    toReplace.value = replacement.value;
+
+    replacement.key = tempKey;
+    replacement.value = tempVal;
   }
 
   public void printBinaryTree() {
