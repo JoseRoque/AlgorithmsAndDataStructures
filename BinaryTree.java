@@ -184,6 +184,7 @@ public class BinaryTree<K extends Comparable, V> {
     // case 3: if has both left and right child
     if( hasRightChild(nodeToReplace) && hasLeftChild(nodeToReplace) ) {
       BinaryTreeNode<K,V> successor = successor(nodeToReplace);
+      // copy contents over from succesor
       copyContents(nodeToReplace, successor);
       delete(successor);
     }
@@ -199,6 +200,19 @@ public class BinaryTree<K extends Comparable, V> {
     replacement.key = tempKey;
     replacement.value = tempVal;
   }
+
+  public void transport(BinaryTreeNode<K,V> transportTo,
+   BinaryTreeNode<K,V> transportFrom) {
+
+     if( transportTo.parent == null ) {
+       root = transportFrom;
+     } else if( transportTo.parent.left.key.compareTo() ){
+
+     } else if() {
+
+     }
+  }
+
 
   public void printBinaryTree() {
     printBinaryTree(root);
