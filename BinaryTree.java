@@ -2,8 +2,8 @@ import java.util.*;
 import java.lang.*;
 import java.util.stream.Collectors;
 
-public class BinaryTree<K extends Comparable, V> {
-  BinaryTreeNode<K,V> root;
+public class BinaryTree<K extends Comparable, V extends Comparable> {
+  BinaryTreeNode root;
 
   public BinaryTree() {
     this.root = null;
@@ -18,6 +18,37 @@ public class BinaryTree<K extends Comparable, V> {
     }
     addBinaryTreeNode( root, n );
   }
+
+  public void addBinaryTreeNodeIterive( K key, V value) {
+    if( root == null ) {
+      root = new BinaryTreeNode<K,V>(key, value);
+      return;
+    }
+
+    BinaryTreeNode<K,V> currentNode = null;
+    BinaryTreeNode<K,V> nextNode = root;
+
+    while( nextNode != null ) {
+      currentNode = nextNode;
+      if( key.compareTo(currentNode.key) < 0 ) {
+        nextNode = currentNode.left;
+      } else {
+        nextNode = currentNode.right;
+      }
+    }
+
+    if( key.compareTo(currentNode.key) < 0 ){
+      addChildToNode( currentNode.left ,new BinaryTreeNode<K,V>( key, value));
+    } else {
+      addChildToNode( currentNode.right ,new BinaryTreeNode<K,V>( key, value));
+    }
+  }
+
+  public void addChildToNode(BinaryTreeNode<K,V> parent, BinaryTreeNode<K,V> child ){
+    parent = child;
+    child.parent = parent.parent;
+  }
+
 
   public void addBinaryTreeNode( BinaryTreeNode<K,V> node, BinaryTreeNode<K,V> data ) {
     if(node != null && data.key.compareTo(node.key) < 0) {
@@ -201,18 +232,17 @@ public class BinaryTree<K extends Comparable, V> {
     replacement.value = tempVal;
   }
 
-  public void transport(BinaryTreeNode<K,V> transportTo,
-   BinaryTreeNode<K,V> transportFrom) {
-
-     if( transportTo.parent == null ) {
-       root = transportFrom;
-     } else if( transportTo.parent.left.key.compareTo() ){
-
-     } else if() {
-
-     }
-  }
-
+  // public void transport(BinaryTreeNode<K,V> transportTo,
+  //  BinaryTreeNode<K,V> transportFrom) {
+  //
+  //    if( transportTo.parent == null ) {
+  //      root = transportFrom;
+  //    } else if( transportTo.parent.left.key.compareTo() ){
+  //
+  //    } else if() {
+  //
+  //    }
+  // }
 
   public void printBinaryTree() {
     printBinaryTree(root);

@@ -37,11 +37,11 @@ public class BinaryTreeNode<K extends Comparable, V extends Comparable> implemen
     }
 
     BinaryTreeNode<K,V> c = (BinaryTreeNode<K,V>) o;
-    return key.compareTo(c.key)
-      && value.compareTo(c.value)
-      && parent = c.parent
-      && left = c.left
-      && right = c.right;
+    return key.equals(c.key)
+      && value.equals(c.value)
+      && parent == c.parent
+      && left == c.left
+      && right == c.right;
   }
 
   @Override
