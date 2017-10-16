@@ -19,6 +19,31 @@ public class BinaryTree<K extends Comparable, V extends Comparable> {
     addBinaryTreeNode( root, n );
   }
 
+  public void inOrder() {
+    inOrder(root);
+  }
+
+  private void inOrder(BinaryTreeNode<K,V> node) {
+    if(node != null) {
+      inOrder(node.left);
+      System.out.println(node.value);
+      inOrder(node.right);
+    }
+  }
+
+  public void preOrder() {
+    preOrder(root);
+  }
+
+  private void preOrder(BinaryTreeNode<K,V> node) {
+    if(node == null) {
+      return;
+    }
+    System.out.println(node.value);
+    preOrder(node.left);
+    preOrder(node.right);
+  }
+
   public void addBinaryTreeNodeIterive( K key, V value) {
     if( root == null ) {
       root = new BinaryTreeNode<K,V>(key, value);
@@ -48,7 +73,6 @@ public class BinaryTree<K extends Comparable, V extends Comparable> {
     parent = child;
     child.parent = parent.parent;
   }
-
 
   public void addBinaryTreeNode( BinaryTreeNode<K,V> node, BinaryTreeNode<K,V> data ) {
     if(node != null && data.key.compareTo(node.key) < 0) {
