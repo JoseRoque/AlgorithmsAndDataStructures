@@ -19,6 +19,30 @@ public class BinaryTree<K extends Comparable, V extends Comparable> {
     addBinaryTreeNode( root, n );
   }
 
+  public void rotateLeft( BinaryTreeNode<K,V> node ) {
+    if( node.right == null ) {
+      return;
+    }
+
+    BinaryTreeNode temp = node;
+    if( node.parent == null ) {
+      // node is root
+      root = node.right;
+      root.parent = null;
+    } else {
+      if(node.parent.left == node) {
+        // node was its parent left child
+        node.parent.left = node.right;
+      }else {
+        node.parent.right = node.right;
+      }
+    }
+
+    node.right.left = temp;
+    temp.parent = node.right;
+    temp.right = null;
+  }
+
   public void inOrder() {
     inOrder(root);
   }
